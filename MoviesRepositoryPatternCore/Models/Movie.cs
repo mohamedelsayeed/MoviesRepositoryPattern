@@ -16,8 +16,8 @@ namespace MoviesRepositoryPattern.Core.Models
         public double Rate { get; set; }
         [MaxLength(250)]
         public string StoryLine { get; set; }
-        public byte[] Poster { get; set; }
-        public byte GenreId { get; set; }
+        public string Poster { get; set; }
+        public int GenreId { get; set; }
         public Genre Genre { get; set; }
 
     }

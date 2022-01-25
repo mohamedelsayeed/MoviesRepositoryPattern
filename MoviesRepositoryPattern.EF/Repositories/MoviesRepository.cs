@@ -24,17 +24,22 @@ namespace MoviesRepositoryPattern.EF.Repositories
             await _context.Set<T>().AddAsync(entity);
             return entity;
         }
+        public async Task<IEnumerable<T>> CreateListMovies(IEnumerable<T> entity)
+        {
+            await _context.Set<T>().AddRangeAsync(entity);
 
+            return entity;
+        }
         public async Task<IEnumerable<T>> GetAllMovies(string[] includes = null)
         {
-            if(includes != null)
-                foreach(var include in includes)
-                return await _context.Set<T>().Include(include).ToListAsync();
+            if (includes != null)
+                foreach (var include in includes)
+                    return await _context.Set<T>().Include(include).ToListAsync();
 
             return await _context.Set<T>().ToListAsync();
         }
 
-        public async Task<T> GetMovieById(byte id)
+        public async Task<T> GetMovieById(int id)
         {
 
             return await _context.Set<T>().FindAsync(id);
@@ -72,5 +77,12 @@ namespace MoviesRepositoryPattern.EF.Repositories
             return await query.ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> GetMoviesByGenreId(Expression<Func<T, bool>> criteria)
+        {
+            var query = _context.Set<T>().Where(criteria).AsQueryable();
+            foreach (var property in _context.Model.FindEntityType(typeof(T)).GetNavigations())
+                query = query.Include(property.Name);
+            return await query.ToListAsync();
+        }
     }
 }

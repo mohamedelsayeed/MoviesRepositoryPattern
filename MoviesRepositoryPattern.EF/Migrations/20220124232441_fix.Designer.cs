@@ -12,8 +12,8 @@ using MoviesRepositoryPattern.EF;
 namespace MoviesRepositoryPattern.EF.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220119225214_addMovieTable")]
-    partial class addMovieTable
+    [Migration("20220124232441_fix")]
+    partial class fix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,11 +26,11 @@ namespace MoviesRepositoryPattern.EF.Migrations
 
             modelBuilder.Entity("MoviesRepositoryPattern.Core.Models.Genre", b =>
                 {
-                    b.Property<byte>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<byte>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -50,8 +50,8 @@ namespace MoviesRepositoryPattern.EF.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<byte>("GenreId")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("GenreId")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("Poster")
                         .IsRequired()

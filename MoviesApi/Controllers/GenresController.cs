@@ -35,6 +35,18 @@ namespace MoviesApi.Controllers
             await _baseRepository.Complete();
             return Ok(genre);
         }
+        [HttpPost("CreateListAsync")]
+        public async Task<IActionResult> CreateListAsync(List<CreateGenreDto> dtos)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var genre = new List<Genre>();
+            genre = dtos.Select(a => new Genre { Name = a.Name }).ToList();
+
+             _baseRepository.CreateListGenre(genre);
+            await _baseRepository.Complete();
+            return Ok(genre);
+        }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateGenreAsync(byte id,[FromBody] CreateGenreDto dto)
         {

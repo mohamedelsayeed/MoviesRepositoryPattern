@@ -22,13 +22,18 @@ namespace MoviesRepositoryPattern.EF.Repositories
             await _context.Set<T>().AddAsync(entity);
             return entity;
         }
+        public async Task<IEnumerable<T>> CreateListGenre(IEnumerable<T> entity)
+        {
+            await _context.Set<T>().AddRangeAsync(entity);
 
+            return entity;
+        }
         public async Task<IEnumerable<T>> GetAllGenre()
         {
             return await _context.Set<T>().ToListAsync();
         }
 
-        public async Task<T> GetGenreById(byte id)
+        public async Task<T> GetGenreById(int id)
         {
 
             return await _context.Set<T>().FindAsync(id);
@@ -46,7 +51,7 @@ namespace MoviesRepositoryPattern.EF.Repositories
 
         public void DeleteGenre(T entity)
         {
-           _context.Set<T>().Remove(entity);
+            _context.Set<T>().Remove(entity);
         }
     }
 }
